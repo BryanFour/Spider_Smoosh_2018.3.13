@@ -108,6 +108,12 @@ public class GameManager : MonoBehaviour
 		GooglePlayManager.ShowLeaderboardUI();
 	}
 
+	public void ShowAchievements()
+	{
+		SoundManager.Instance.ButtonSFX();
+		GooglePlayManager.ShowAchievementUI();
+	}
+
 	public void LoadMainMenu()
 	{
 		//	Play the button SFX

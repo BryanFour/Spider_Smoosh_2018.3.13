@@ -28,6 +28,29 @@ public class DestroyManager : MonoBehaviour
 					spidersSquishedCount = PlayerPrefs.GetInt("SpidersSquished", 0);
 					//	Add 1 to the spider squished count
 					spidersSquishedCount += 1;
+
+					// Check if we have reached an achievment target.
+					switch (spidersSquishedCount)
+					{
+						case 100:
+							GooglePlayManager.UnlockAchievement(GPGSIds.achievement_100_lifetime_squishes);
+							break;
+						case 500:
+							GooglePlayManager.UnlockAchievement(GPGSIds.achievement_500_lifetime_squishes);
+							break;
+						case 1000:
+							GooglePlayManager.UnlockAchievement(GPGSIds.achievement_1000_lifetime_squishes);
+							break;
+						case 5000:
+							GooglePlayManager.UnlockAchievement(GPGSIds.achievement_5000_lifetime_squishes);
+							break;
+						case 10000:
+							GooglePlayManager.UnlockAchievement(GPGSIds.achievement_10000_lifetime_squishes);
+							break;
+						default:
+							break;
+					}
+
 					//	set the player prefs SpidersSquished value to the new spidersSquishedcount.
 					PlayerPrefs.SetInt("SpidersSquished", spidersSquishedCount);
 					//	Destroy the object that was hit by the ray

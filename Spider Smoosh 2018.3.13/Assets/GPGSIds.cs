@@ -24,7 +24,12 @@
 
 public static class GPGSIds
 {
+        public const string achievement_5000_lifetime_squishes = "CgkI-PKj4KALEAIQBw"; // <GPGSID>
         public const string leaderboard_high_score = "CgkI-PKj4KALEAIQAw"; // <GPGSID>
+        public const string achievement_10000_lifetime_squishes = "CgkI-PKj4KALEAIQCA"; // <GPGSID>
+        public const string achievement_500_lifetime_squishes = "CgkI-PKj4KALEAIQBQ"; // <GPGSID>
+        public const string achievement_100_lifetime_squishes = "CgkI-PKj4KALEAIQBA"; // <GPGSID>
+        public const string achievement_1000_lifetime_squishes = "CgkI-PKj4KALEAIQBg"; // <GPGSID>
 
 }
 

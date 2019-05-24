@@ -8,7 +8,9 @@ using UnityEngine.SceneManagement;
 using TMPro;
 using GooglePlayGames;
 using GooglePlayGames.BasicApi;
-// https://www.youtube.com/watch?v=M6nwu00-VR4
+// https://www.youtube.com/watch?v=M6nwu00-VR4 - Leaderboard
+// https://www.youtube.com/watch?v=XN29LTFtk3c - Achievments
+
 
 public class GooglePlayManager : MonoBehaviour
 {
@@ -68,5 +70,21 @@ public class GooglePlayManager : MonoBehaviour
 	public static void ShowLeaderboardUI()
 	{
 		PlayGamesPlatform.Instance.ShowLeaderboardUI(GPGSIds.leaderboard_high_score);
+	}
+
+	public static void ShowAchievementUI()
+	{
+		if (Social.localUser.authenticated)
+		{
+			Social.ShowAchievementsUI();
+		}
+	}
+
+	public static void UnlockAchievement(string achievementID)
+	{
+		Social.ReportProgress(achievementID, 100.0f, (bool success) =>
+		{
+			Debug.Log("Achievement Unlocked " + success.ToString());
+		});
 	}
 }
