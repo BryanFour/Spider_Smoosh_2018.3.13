@@ -24,12 +24,17 @@
 
 public static class GPGSIds
 {
-        public const string achievement_5000_lifetime_squishes = "CgkI-PKj4KALEAIQBw"; // <GPGSID>
+        public const string achievement_250_spiders_sprayed = "CgkI-PKj4KALEAIQCg"; // <GPGSID>
+        public const string achievement_10000_spiders_squished = "CgkI-PKj4KALEAIQCA"; // <GPGSID>
+        public const string achievement_100_spiders_squished = "CgkI-PKj4KALEAIQBA"; // <GPGSID>
+        public const string achievement_2500_spiders_sprayed = "CgkI-PKj4KALEAIQDA"; // <GPGSID>
+        public const string achievement_5000_spiders_sprayed = "CgkI-PKj4KALEAIQDQ"; // <GPGSID>
+        public const string achievement_500_spiders_squished = "CgkI-PKj4KALEAIQBQ"; // <GPGSID>
+        public const string achievement_50_spiders_sprayed = "CgkI-PKj4KALEAIQCQ"; // <GPGSID>
+        public const string achievement_500_spiders_sprayed = "CgkI-PKj4KALEAIQCw"; // <GPGSID>
+        public const string achievement_1000_spiders_squished = "CgkI-PKj4KALEAIQBg"; // <GPGSID>
         public const string leaderboard_high_score = "CgkI-PKj4KALEAIQAw"; // <GPGSID>
-        public const string achievement_10000_lifetime_squishes = "CgkI-PKj4KALEAIQCA"; // <GPGSID>
-        public const string achievement_500_lifetime_squishes = "CgkI-PKj4KALEAIQBQ"; // <GPGSID>
-        public const string achievement_100_lifetime_squishes = "CgkI-PKj4KALEAIQBA"; // <GPGSID>
-        public const string achievement_1000_lifetime_squishes = "CgkI-PKj4KALEAIQBg"; // <GPGSID>
+        public const string achievement_5000_spiders_squished = "CgkI-PKj4KALEAIQBw"; // <GPGSID>
 
 }
 

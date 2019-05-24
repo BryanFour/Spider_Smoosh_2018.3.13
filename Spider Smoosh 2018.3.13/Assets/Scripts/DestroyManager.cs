@@ -33,19 +33,19 @@ public class DestroyManager : MonoBehaviour
 					switch (spidersSquishedCount)
 					{
 						case 100:
-							GooglePlayManager.UnlockAchievement(GPGSIds.achievement_100_lifetime_squishes);
+							GooglePlayManager.UnlockAchievement(GPGSIds.achievement_100_spiders_squished);
 							break;
 						case 500:
-							GooglePlayManager.UnlockAchievement(GPGSIds.achievement_500_lifetime_squishes);
+							GooglePlayManager.UnlockAchievement(GPGSIds.achievement_500_spiders_squished);
 							break;
 						case 1000:
-							GooglePlayManager.UnlockAchievement(GPGSIds.achievement_1000_lifetime_squishes);
+							GooglePlayManager.UnlockAchievement(GPGSIds.achievement_1000_spiders_squished);
 							break;
 						case 5000:
-							GooglePlayManager.UnlockAchievement(GPGSIds.achievement_5000_lifetime_squishes);
+							GooglePlayManager.UnlockAchievement(GPGSIds.achievement_5000_spiders_squished);
 							break;
 						case 10000:
-							GooglePlayManager.UnlockAchievement(GPGSIds.achievement_10000_lifetime_squishes);
+							GooglePlayManager.UnlockAchievement(GPGSIds.achievement_10000_spiders_squished);
 							break;
 						default:
 							break;
