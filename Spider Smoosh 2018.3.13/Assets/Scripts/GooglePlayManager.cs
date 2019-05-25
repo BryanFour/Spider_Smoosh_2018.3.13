@@ -40,7 +40,7 @@ public class GooglePlayManager : MonoBehaviour
 			{
 				Debug.LogError("Unable to sign into Google Play Services");
 				signInText.text = "Could not sign into Google Play Services";
-				signInText.color = Color.red;
+				signInText.color = Color.red; //<------------------------------------ Not working, why???
 				StartCoroutine(LoadMainMenuAfterFail());
 			}
 		});

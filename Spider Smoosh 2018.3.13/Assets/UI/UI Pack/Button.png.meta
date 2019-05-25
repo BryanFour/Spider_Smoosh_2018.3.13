@@ -10,6 +10,7 @@ TextureImporter:
     21300010: Restart_Button
     21300012: Blank_Square_Button
     21300014: Leaderboard_Button
+    21300016: Achievement_Button
   externalObjects: {}
   serializedVersion: 9
   mipmaps:
@@ -262,13 +263,33 @@ TextureImporter:
         width: 182
         height: 192
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
       spriteID: 438cb00d5d37b2547bbedd09b3a98116
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Achievement_Button
+      rect:
+        serializedVersion: 2
+        x: 3501
+        y: 1874
+        width: 184
+        height: 192
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b4b9df6b6796af14e94c68163a094d8c
       vertices: []
       indices: 
       edges: []
