@@ -14,6 +14,9 @@ public class GameManager : MonoBehaviour
 	private GameObject highScoreText;
 	//	The Pannel that is show after watching a rewarded video.
 	public GameObject rewardPanel;
+	
+	
+
 
 	void Awake()
 	{   // GameManager instance Stuff.
@@ -69,8 +72,6 @@ public class GameManager : MonoBehaviour
 		PlayerPrefs.SetString("HasPlayedBefore", "Yes");
 	}
 
-	
-
 	private void UpdateHighScore()
 	{
 		//	Get access to the high score text componant.
@@ -102,18 +103,7 @@ public class GameManager : MonoBehaviour
 	}
 	#endregion
 
-	public void ShowLeaderboard()
-	{
-		SoundManager.Instance.ButtonSFX();
-		GooglePlayManager.ShowLeaderboardUI();
-	}
-
-	public void ShowAchievements()
-	{
-		SoundManager.Instance.ButtonSFX();
-		GooglePlayManager.ShowAchievementUI();
-	}
-
+	#region Scene loading stuff.
 	public void LoadMainMenu()
 	{
 		//	Play the button SFX
@@ -137,6 +127,7 @@ public class GameManager : MonoBehaviour
 		//	Quit the game
 		Application.Quit();
 	}
+	#endregion
 
 	public void PrivacyPolicy()
 	{

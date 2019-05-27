@@ -29,13 +29,16 @@ public class GooglePlayManager : MonoBehaviour
 		PlayGamesClientConfiguration config = new PlayGamesClientConfiguration.Builder().Build();
 		PlayGamesPlatform.InitializeInstance(config);
 		PlayGamesPlatform.Activate();
+
+		//	Try to authenticate the user (Sign them into GPS).
 		Social.localUser.Authenticate((bool success) =>
-		{
+		{	//	If the authentication was successfull.
 			if (success == true)
 			{
 				Debug.Log("Logged into Google Play Games Services");
 				SceneManager.LoadScene("MainMenu");
 			}
+			//  If the authentication failed.
 			else
 			{
 				Debug.LogError("Unable to sign into Google Play Services");
@@ -54,17 +57,20 @@ public class GooglePlayManager : MonoBehaviour
 
 	public static void PostToLeaderboard(long newScore)
 	{
-		Social.ReportScore(newScore, GPGSIds.leaderboard_high_score, (bool success) =>
+		if (Social.localUser.authenticated)
 		{
-			if (success)
+			Social.ReportScore(newScore, GPGSIds.leaderboard_high_score, (bool success) =>
 			{
-				Debug.Log("Posted new score to leaderboard.");
-			}
-			else
-			{
-				Debug.Log("Unable to post new score to leaderboard.");
-			}
-		});
+				if (success)
+				{
+					Debug.Log("Posted new score to leaderboard.");
+				}
+				else
+				{
+					Debug.Log("Unable to post new score to leaderboard.");
+				}
+			});
+		}
 	}
 
 	public static void ShowLeaderboardUI()
@@ -74,17 +80,17 @@ public class GooglePlayManager : MonoBehaviour
 
 	public static void ShowAchievementUI()
 	{
-		if (Social.localUser.authenticated)
-		{
-			Social.ShowAchievementsUI();
-		}
+		Social.ShowAchievementsUI();
 	}
 
 	public static void UnlockAchievement(string achievementID)
 	{
-		Social.ReportProgress(achievementID, 100.0f, (bool success) =>
+		if (Social.localUser.authenticated)
 		{
-			Debug.Log("Achievement Unlocked " + success.ToString());
-		});
+			Social.ReportProgress(achievementID, 100.0f, (bool success) =>
+			{
+				Debug.Log("Achievement Unlocked " + success.ToString());
+			});
+		}
 	}
 }

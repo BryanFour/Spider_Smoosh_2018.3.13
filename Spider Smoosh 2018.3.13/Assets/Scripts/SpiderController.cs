@@ -55,7 +55,7 @@ public class SpiderController : MonoBehaviour
 			Destroy(gameObject);
 		}
 	}
-	
+	/*
 	// Destroy with mouse click --DEBUG Input--
 	private void OnMouseDown()
 	{
@@ -74,5 +74,5 @@ public class SpiderController : MonoBehaviour
 			Destroy(gameObject);
 		}
 	}
-	
+	*/
 }
