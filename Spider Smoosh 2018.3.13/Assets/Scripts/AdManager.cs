@@ -132,7 +132,7 @@ public class AdManager : MonoBehaviour
 		{
 			case ShowResult.Finished:
 				Debug.Log("Ad finished, reward player");
-				GameManager.Instance.RewardPlayer();
+				MainMenuManager.Instance.RewardPlayer();
 				break;
 			case ShowResult.Skipped:
 				Debug.Log("Ad skipped, no reward");

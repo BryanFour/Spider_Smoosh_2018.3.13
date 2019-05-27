@@ -5,6 +5,8 @@ using TMPro;
 
 public class MainMenuManager : MonoBehaviour
 {
+	public static MainMenuManager Instance;
+
 	//	-----	Manual Auth Stuff.
 	//	Manual GPS Auth Panel.
 	public GameObject authPanel;
@@ -15,10 +17,32 @@ public class MainMenuManager : MonoBehaviour
 	//	The auth info text object.
 	public TextMeshProUGUI authInfoText;
 
+	//	The Pannel that is show after watching a rewarded video. (Reward Recived panel.)
+	public GameObject rewardPanel;
+
+
+	public void Awake()
+	{
+		if (Instance == null)
+		{
+			//if not, set instance to this
+			Instance = this;
+		}
+		//If instance already exists and it's not this:
+		else if (Instance != this)
+		{
+
+			//Then destroy this. This enforces our singleton pattern, meaning there can only ever be one instance of a GameManager.
+			Destroy(gameObject);
+
+		}
+	}
 	public void Start()
 	{
 		//	Disable the auth panael at runtime.
 		authPanel.SetActive(false);
+		//	Disable the reward panel at runtime.
+		rewardPanel.SetActive(false);
 	}
 
 	//	Method for the show leaderboard button.
@@ -122,4 +146,23 @@ public class MainMenuManager : MonoBehaviour
 		//	Change the text.
 		authInfoText.text = "Unable to sign into the Google Play Services, would you like to try again?";
 	}
+
+	//---------------------------------------------------------------------------------------------------------------------------------------------------------
+	#region Reward Video Stuff
+	public void RewardPlayer()
+	{
+		int sprayCount = PlayerPrefs.GetInt("SprayCount", 0);
+		//Debug.Log("Spray count was " + sprayCount);
+		sprayCount++;
+		//Debug.Log("Spray clount now is " + sprayCount);
+		PlayerPrefs.SetInt("SprayCount", sprayCount);
+		//Debug.Log("Spray count from player prefs is " + PlayerPrefs.GetInt("SprayCount", 0));
+		rewardPanel.SetActive(true);
+	}
+
+	public void CloseRewardPanel()
+	{
+		rewardPanel.SetActive(false);
+	}
+	#endregion
 }

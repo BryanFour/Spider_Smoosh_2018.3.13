@@ -12,12 +12,7 @@ public class GameManager : MonoBehaviour
 
 	//	The HighScoreValue GameObject in the Main Menus Canvas>HighScore
 	private GameObject highScoreText;
-	//	The Pannel that is show after watching a rewarded video.
-	public GameObject rewardPanel;
 	
-	
-
-
 	void Awake()
 	{   // GameManager instance Stuff.
 		//Check if instance already exists
@@ -40,9 +35,6 @@ public class GameManager : MonoBehaviour
 
 	private void Start()
 	{
-		//	Disable the reward panel at runtime.
-		rewardPanel.SetActive(false);
-
 		//	If the player hasnt played before
 		if(PlayerPrefs.HasKey("HasPlayedBefore") == false)
 		{
@@ -84,24 +76,6 @@ public class GameManager : MonoBehaviour
 		//	Change the high score text componant to our high score.
 		highScoreText.text = minutes + ":" + seconds;
 	}
-
-	#region Reward Video Stuff
-	public void RewardPlayer()
-	{
-		int sprayCount = PlayerPrefs.GetInt("SprayCount", 0);
-		//Debug.Log("Spray count was " + sprayCount);
-		sprayCount++;
-		//Debug.Log("Spray clount now is " + sprayCount);
-		PlayerPrefs.SetInt("SprayCount", sprayCount);
-		//Debug.Log("Spray count from player prefs is " + PlayerPrefs.GetInt("SprayCount", 0));
-		rewardPanel.SetActive(true);
-	}
-
-	public void CloseRewardPanel()
-	{
-		rewardPanel.SetActive(false);
-	}
-	#endregion
 
 	#region Scene loading stuff.
 	public void LoadMainMenu()
