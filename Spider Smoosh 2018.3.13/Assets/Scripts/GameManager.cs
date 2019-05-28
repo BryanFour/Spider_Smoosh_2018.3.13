@@ -45,7 +45,7 @@ public class GameManager : MonoBehaviour
 
 	public void Update()
 	{
-		//	Display the high score on the main menu scene
+		//	Display the high score on the main menu scene        --------- TODO -- Terrible comments, rewrite them
 		Scene currentScene = SceneManager.GetActiveScene();
 		//	Get the current scenes name.
 		string sceneName = currentScene.name;

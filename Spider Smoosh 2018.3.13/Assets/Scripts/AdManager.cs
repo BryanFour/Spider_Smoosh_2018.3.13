@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 #if UNITY_ADS
 using UnityEngine.Advertisements;
 #endif
@@ -13,13 +14,10 @@ public class AdManager : MonoBehaviour
 
 	[Header("Config")]
 	[SerializeField] private string gameID = "3149495";
-	[SerializeField] private bool testMode = true;
+	[SerializeField] private bool testMode = false;
 	[SerializeField] private string rewardedVideoPlacementID = "rewardedVideo";
 	[SerializeField] private string regularPlacementID = "video";
-
-	//	Error Debugging
-	//public GameObject error1;
-	//public GameObject error2;
+	private string bannerAdID = "bannerAd";
 
 	void Awake()
 	{
@@ -48,10 +46,9 @@ public class AdManager : MonoBehaviour
 
 	private void Start()
 	{
-		//error1.SetActive(false);
-		//error2.SetActive(false);
+		//StartCoroutine(ShowBannerWhenReady());  --- Now ran from the mainmenu script.
 	}
-	
+
 	public void RequestRegularAd(Action<ShowResult> callback)
 	{
 #if UNITY_ADS
@@ -69,26 +66,6 @@ public class AdManager : MonoBehaviour
 		Debug.Log("Ads not supported");
 #endif
 	}
-	
-	/*
-	public void RequestRegularAd()
-	{
-#if UNITY_ADS
-		if (Advertisement.IsReady(regularPlacementID))
-		{
-			//ShowOptions so = new ShowOptions();
-			//so.resultCallback = callback;
-			Advertisement.Show(regularPlacementID);
-		}
-		else
-		{
-			Debug.Log("Ad not ready yet.");
-		}
-#else
-		Debug.Log("Ads not supported");
-#endif
-	}
-	*/
 
 	public void RequestRewardedAd(Action<ShowResult> callback)
 	{
@@ -112,7 +89,6 @@ public class AdManager : MonoBehaviour
 	public void PlayRegularAd()
 	{
 		RequestRegularAd(OnAdClosed);
-		//RequestRegularAd();
 	}
 	
 	public void PlayRewardedAd()
@@ -122,37 +98,41 @@ public class AdManager : MonoBehaviour
 
 	private void OnAdClosed(ShowResult result)
 	{
-		Debug.Log("Regular ad closed");
+		//Debug.Log("Regular ad closed");
 	}
 	
-	private void OnRewardedAdClosed(ShowResult result)  ////// https://forum.unity.com/threads/unity-rewarded-ads-not-calling-back-first-time.608053/
+	private void OnRewardedAdClosed(ShowResult result) 
 	{
-		Debug.Log("Rewarded ad closed");
+		//Debug.Log("Rewarded ad closed");
 		switch (result)
 		{
 			case ShowResult.Finished:
-				Debug.Log("Ad finished, reward player");
+				//Debug.Log("Ad finished, reward player");
 				MainMenuManager.Instance.RewardPlayer();
 				break;
 			case ShowResult.Skipped:
-				Debug.Log("Ad skipped, no reward");
-				//error1.SetActive(true);
+				//Debug.Log("Ad skipped, no reward");
 				break;
 			case ShowResult.Failed:
-				Debug.Log("Ad failed");
-				//error2.SetActive(true);
+				//Debug.Log("Ad failed");
 				break;
 		}
 	}
-	
-	//	Error debugging stuff.
-	public void CloseErrorOne()
+
+	public IEnumerator ShowBannerWhenReady()
 	{
-		//error1.SetActive(false);
+		//	While the adverticement is not ready.
+		while (!Advertisement.IsReady(bannerAdID))
+		{
+			yield return new WaitForSeconds(0.05f);
+		}
+		//	If the adverticement is ready.
+		Advertisement.Banner.SetPosition(BannerPosition.TOP_CENTER);
+		Advertisement.Banner.Show(bannerAdID);
 	}
 
-	public void CloseErrorTwo()
+	public void Hidebanner()
 	{
-		//error2.SetActive(false);
+		Advertisement.Banner.Hide();
 	}
 }

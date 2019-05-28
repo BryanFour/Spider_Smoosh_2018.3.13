@@ -118,6 +118,9 @@ public class LevelManager : MonoBehaviour
 		}
 		//	Start the countdown coroutine
 		StartCoroutine(CountDown());
+
+		// Run the Banner routine in the admanager script.
+		HideBanner();
 	}
 
     void Update()
@@ -317,6 +320,13 @@ public class LevelManager : MonoBehaviour
 		yield return new WaitForSecondsRealtime(1.2f);
 		//	Disable the new high score text
 		newHighScore.gameObject.SetActive(false);
+	}
+
+	//	Run the HideBanner method when this script is loaded.
+	private void HideBanner()
+	{
+		//Debug.Log("HideBanner method being called from Levelmanager");
+		AdManager.Instance.Hidebanner();
 	}
 
 	#region Scene Loading Stuff

@@ -43,6 +43,9 @@ public class MainMenuManager : MonoBehaviour
 		authPanel.SetActive(false);
 		//	Disable the reward panel at runtime.
 		rewardPanel.SetActive(false);
+
+		// Run the Banner routine in the admanager script.
+		CallBannerRoutine();
 	}
 
 	//	Method for the show leaderboard button.
@@ -165,4 +168,11 @@ public class MainMenuManager : MonoBehaviour
 		rewardPanel.SetActive(false);
 	}
 	#endregion
+
+	//	Start the Banner routine when this script is loaded.
+	private void CallBannerRoutine()
+	{
+		//Debug.Log("RunBannerRoutine method being called from mainmenumanager");
+		StartCoroutine(AdManager.Instance.ShowBannerWhenReady());
+	}
 }
