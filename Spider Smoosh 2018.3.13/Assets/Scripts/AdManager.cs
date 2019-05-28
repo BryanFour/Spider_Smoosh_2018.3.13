@@ -120,7 +120,7 @@ public class AdManager : MonoBehaviour
 	}
 
 	public IEnumerator ShowBannerWhenReady()
-	{
+	{   /*
 		//	While the adverticement is not ready.
 		while (!Advertisement.IsReady(bannerAdID))
 		{
@@ -129,6 +129,26 @@ public class AdManager : MonoBehaviour
 		//	If the adverticement is ready.
 		Advertisement.Banner.SetPosition(BannerPosition.TOP_CENTER);
 		Advertisement.Banner.Show(bannerAdID);
+		*/
+		//	While the adverticement is not ready.
+		while (!Advertisement.IsReady(bannerAdID))
+		{
+			yield return new WaitForSeconds(0.05f);
+		}
+		if (Advertisement.Banner.isLoaded || Advertisement.IsReady(bannerAdID))  //---- https://forum.unity.com/threads/can-i-make-banner-ads-optional-for-the-player.594811/#post-4143193
+		{
+			Debug.Log("Showing banner");
+			Advertisement.Banner.SetPosition(BannerPosition.TOP_CENTER);
+			Advertisement.Banner.Show(bannerAdID);
+		}
+		else
+		{
+			Debug.Log("Bannner not ready");
+			Advertisement.Banner.Load(bannerAdID);
+			yield return new WaitForSeconds(0.05f);
+			StartCoroutine(ShowBannerWhenReady());
+		}
+		
 	}
 
 	public void Hidebanner()

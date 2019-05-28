@@ -20,17 +20,17 @@ public class SprayCollision : MonoBehaviour
 			case 50:
 				GooglePlayManager.UnlockAchievement(GPGSIds.achievement_50_spiders_sprayed);
 				break;
+			case 100:
+				GooglePlayManager.UnlockAchievement(GPGSIds.achievement_100_spiders_sprayed);
+				break;
 			case 250:
 				GooglePlayManager.UnlockAchievement(GPGSIds.achievement_250_spiders_sprayed);
 				break;
 			case 500:
 				GooglePlayManager.UnlockAchievement(GPGSIds.achievement_500_spiders_sprayed);
 				break;
-			case 2500:
-				GooglePlayManager.UnlockAchievement(GPGSIds.achievement_2500_spiders_sprayed);
-				break;
-			case 5000:
-				GooglePlayManager.UnlockAchievement(GPGSIds.achievement_5000_spiders_sprayed);
+			case 1000:
+				GooglePlayManager.UnlockAchievement(GPGSIds.achievement_1000_spiders_sprayed);
 				break;
 			default:
 				break;

@@ -118,7 +118,7 @@ PlayerSettings:
     16:10: 1
     16:9: 1
     Others: 1
-  bundleVersion: 1.7.4
+  bundleVersion: 1.8
   preloadedAssets: []
   metroInputSource: 0
   wsaTransparentSwapchain: 0
@@ -155,7 +155,7 @@ PlayerSettings:
   applicationIdentifier:
     Android: com.BurningHairStudios.SpiderSmoosh
   buildNumber: {}
-  AndroidBundleVersionCode: 28
+  AndroidBundleVersionCode: 29
   AndroidMinSdkVersion: 16
   AndroidTargetSdkVersion: 0
   AndroidPreferredInstallLocation: 1
@@ -263,7 +263,7 @@ PlayerSettings:
   - m_BuildTarget: 
     m_Icons:
     - serializedVersion: 2
-      m_Icon: {fileID: 2800000, guid: b45e7677de27bfe47b591f615f088330, type: 3}
+      m_Icon: {fileID: 2800000, guid: 3b04f76a0dba47549b1d3861592ca125, type: 3}
       m_Width: 128
       m_Height: 128
       m_Kind: 0
