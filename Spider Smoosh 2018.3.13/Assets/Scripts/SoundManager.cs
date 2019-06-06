@@ -15,13 +15,14 @@ public class SoundManager : MonoBehaviour
 	private AudioSource dieAudioSource;
 	private AudioSource buttonAudioSource;
 	private AudioSource countDownAudioSource;
+	private AudioSource highScoreAudioSource;
 
 	public AudioClip countDownBeep;
 	public AudioClip buttonSFX;
 	public AudioClip[] squishSFX;
 	public AudioClip bgMusic;
+	public AudioClip highScoreClaps;
 
-	private int sceneIndex; //----- probs not needed.
 	[HideInInspector]
 	public bool bgMusicIsPlaying = false;
 
@@ -55,6 +56,7 @@ public class SoundManager : MonoBehaviour
 
 	void Start()
 	{
+		highScoreAudioSource = gameObject.AddComponent<AudioSource>();
 		squishAudioSource = gameObject.AddComponent<AudioSource>();
 		rattleAudioSource = gameObject.AddComponent<AudioSource>();
 		dieAudioSource = gameObject.AddComponent<AudioSource>();
@@ -99,14 +101,12 @@ public class SoundManager : MonoBehaviour
 	#region BackGround SFX
 	public void StartBgMusic()
 	{
-		Debug.Log("Background music start method ran");
 		bgAudioSource.Play();
 		bgMusicIsPlaying = true;
 	}
 
 	public void StopBgMusic()
 	{
-		Debug.Log("Background music stop method ran");
 		bgAudioSource.Stop();
 		bgMusicIsPlaying = false;
 	}
@@ -127,6 +127,18 @@ public class SoundManager : MonoBehaviour
 	public void ButtonSFX()
 	{
 		buttonAudioSource.PlayOneShot(buttonSFX);
+	}
+	#endregion
+
+	#region HighScore
+	public void StartHighScoreSFX()
+	{
+		highScoreAudioSource.PlayOneShot(highScoreClaps, .5f);
+	}
+
+	public void StopHighScoreSFX()
+	{
+		highScoreAudioSource.Stop();
 	}
 	#endregion
 

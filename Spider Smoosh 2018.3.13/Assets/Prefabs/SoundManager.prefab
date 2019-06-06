@@ -50,6 +50,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: dd7324217c03f5a4e82b5098f5ce8db4, type: 3}
   - {fileID: 8300000, guid: 578564c903b0e5841b2fc7123cc0068e, type: 3}
   bgMusic: {fileID: 8300000, guid: e94625e531a09ec4cab74cbf27eaf0d2, type: 3}
+  highScoreClaps: {fileID: 8300000, guid: aa627ea6d0e57c04291788f2ad3e32ce, type: 3}
+  bgMusicIsPlaying: 0
   spraySFX: {fileID: 8300000, guid: f9ba0c68ead9116499fd566175a2ce05, type: 3}
   sprayRattle: {fileID: 8300000, guid: ed41a116a0e2baa4bb3e39c347e8b728, type: 3}
   dieSFX:

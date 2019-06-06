@@ -332,9 +332,14 @@ public class LevelManager : MonoBehaviour
 	IEnumerator NewHighScore()
 	{	//	If the player beats there high score, enable the New High Score text
 		newHighScore.gameObject.SetActive(true);
+		//	Ply the new high score SFX.
+		SoundManager.Instance.StartHighScoreSFX();
+		//	Wait 1.2 seconds.
 		yield return new WaitForSecondsRealtime(1.2f);
 		//	Disable the new high score text
 		newHighScore.gameObject.SetActive(false);
+		//	Stop the high score SFX.
+		SoundManager.Instance.StopHighScoreSFX();
 	}
 
 	//	Run the HideBanner method when this script is loaded.
