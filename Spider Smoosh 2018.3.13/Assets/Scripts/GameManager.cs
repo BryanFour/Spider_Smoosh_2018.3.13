@@ -70,9 +70,14 @@ public class GameManager : MonoBehaviour
 		TextMeshProUGUI highScoreText = GameObject.Find("HighScoreValue").GetComponent<TextMeshProUGUI>();
 		//	Store the high score value inside a temp float "highScore".
 		float highScore = PlayerPrefs.GetFloat("HighScore", 0);
-		//	Make the time show in minutes and seconds.
-		string minutes = ((int)highScore / 60).ToString("00"); // Used to have the timer show in seconds and minutes rather that just seconds.
-		string seconds = (highScore % 60).ToString("00.00"); // Used to have the timer show in seconds and minutes rather that just seconds.
+		
+		//	Make the time show in minutes and seconds. -- Old Way
+		//string minutes = ((int)highScore / 60).ToString("00"); // Used to have the timer show in seconds and minutes rather that just seconds.
+		//string seconds = (highScore % 60).ToString("00.00"); // Used to have the timer show in seconds and minutes rather that just seconds.
+		
+		//	Format the High Score text on the mainmenu to show in minutes and seconds.
+		string minutes = Mathf.Floor(highScore / 60).ToString("00");
+		string seconds = Mathf.Floor(highScore % 60).ToString("00");
 		//	Change the high score text componant to our high score.
 		highScoreText.text = minutes + ":" + seconds;
 	}

@@ -21,8 +21,9 @@ public class SoundManager : MonoBehaviour
 	public AudioClip[] squishSFX;
 	public AudioClip bgMusic;
 
-	private int sceneIndex;
-	private bool bgMusicIsPlaying = false;
+	private int sceneIndex; //----- probs not needed.
+	[HideInInspector]
+	public bool bgMusicIsPlaying = false;
 
 	//	Spray Can Stuff
 	public AudioClip spraySFX;
@@ -52,7 +53,6 @@ public class SoundManager : MonoBehaviour
 		DontDestroyOnLoad(gameObject);
 	}
 
-
 	void Start()
 	{
 		squishAudioSource = gameObject.AddComponent<AudioSource>();
@@ -69,19 +69,6 @@ public class SoundManager : MonoBehaviour
 		bgAudioSource.clip = bgMusic;
 	}
 
-    void Update()
-    {
-		//	BackGround SFX
-		sceneIndex = SceneManager.GetActiveScene().buildIndex;
-		if (sceneIndex == 2 && bgMusicIsPlaying == false)
-		{
-			StartBgMusic();
-		}
-		else if(sceneIndex == 1 && bgMusicIsPlaying == false)
-		{
-			StartBgMusic();
-		}
-    }
 	#region Die SFX
 	public void DieSFX()
 	{
@@ -110,14 +97,16 @@ public class SoundManager : MonoBehaviour
 	#endregion
 
 	#region BackGround SFX
-	private void StartBgMusic()
+	public void StartBgMusic()
 	{
+		Debug.Log("Background music start method ran");
 		bgAudioSource.Play();
 		bgMusicIsPlaying = true;
 	}
 
-	private void StopBgMusic()
+	public void StopBgMusic()
 	{
+		Debug.Log("Background music stop method ran");
 		bgAudioSource.Stop();
 		bgMusicIsPlaying = false;
 	}

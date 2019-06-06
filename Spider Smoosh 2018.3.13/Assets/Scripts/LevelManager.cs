@@ -87,7 +87,11 @@ public class LevelManager : MonoBehaviour
 
 	void Start()
     {
-
+		//	Start the BackGround SFX if it isnt already playing.
+		if (SoundManager.Instance.bgMusicIsPlaying == false)
+		{
+			SoundManager.Instance.StartBgMusic();
+		}
 		//	Get the amount of spiders squished throughout all the games played before the level is played.
 		squishedLifetimeBeforePlay = PlayerPrefs.GetInt("SpidersSquished");
 		//	Get the amount of spiders sprayed throughout all the games played before the level is played.
@@ -142,9 +146,16 @@ public class LevelManager : MonoBehaviour
 		}
 		//	Keep track of how long the player has been playing.
 		timePlayed = Time.time - (timeSinceStart + PRE_START_COUNTDOWN);
+		
+		//	Old Format
 		//	Format the timer time.
-		string minutes = ((int)timePlayed / 60).ToString("00"); // Used to have the timer show in seconds and minutes rather that just seconds.
-		string seconds = (timePlayed % 60).ToString("00.00"); // Used to have the timer show in seconds and minutes rather that just seconds.
+		//string minutes = ((int)timePlayed / 60).ToString("00"); // Used to have the timer show in seconds and minutes rather that just seconds.
+		//string seconds = (timePlayed % 60).ToString("00.00"); // Used to have the timer show in seconds and minutes rather that just seconds.
+		//	Old Format End.
+		
+		//	Format the timer to show in minutes and seconds.
+		string minutes = Mathf.Floor(timePlayed / 60).ToString("00");
+		string seconds = Mathf.Floor(timePlayed % 60).ToString("00");
 		//	Display the time.
 		timerText.text = minutes + ":" + seconds;
 
@@ -343,10 +354,13 @@ public class LevelManager : MonoBehaviour
 
 	public void LoadLevel()
 	{
-		//	Play the button SFX
-		SoundManager.Instance.ButtonSFX();
-		//	Load the level scene.
-		SceneManager.LoadScene(2);
+		if(AdManager.Instance.adIsPlaying == false)
+		{
+			//	Play the button SFX
+			SoundManager.Instance.ButtonSFX();
+			//	Load the level scene.
+			SceneManager.LoadScene(2);
+		}
 	}
 	#endregion
 

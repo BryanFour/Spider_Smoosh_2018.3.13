@@ -39,6 +39,11 @@ public class MainMenuManager : MonoBehaviour
 	}
 	public void Start()
 	{
+		//	Start the BackGround SFX if it isnt already playing.
+		if(SoundManager.Instance.bgMusicIsPlaying == false)
+		{
+			SoundManager.Instance.StartBgMusic();
+		}
 		//	Disable the auth panael at runtime.
 		authPanel.SetActive(false);
 		//	Disable the reward panel at runtime.

@@ -19,6 +19,10 @@ public class AdManager : MonoBehaviour
 	[SerializeField] private string regularPlacementID = "video";
 	private string bannerAdID = "bannerAd";
 
+	//	Bool to tell other scripts that an a is playing.
+	[HideInInspector]
+	public bool adIsPlaying = false;			//---- Probs not needed.
+
 	void Awake()
 	{
 		#region Instance Stuff
@@ -49,6 +53,7 @@ public class AdManager : MonoBehaviour
 		//StartCoroutine(ShowBannerWhenReady());  --- Now ran from the mainmenu script.
 	}
 
+	#region Regular Ad.
 	public void RequestRegularAd(Action<ShowResult> callback)
 	{
 #if UNITY_ADS
@@ -57,6 +62,8 @@ public class AdManager : MonoBehaviour
 			ShowOptions so = new ShowOptions();
 			so.resultCallback = callback;
 			Advertisement.Show(regularPlacementID, so);
+			//	Stop the Backgroud SFX from playing.
+			SoundManager.Instance.StopBgMusic();
 		}
 		else
 		{
@@ -67,6 +74,31 @@ public class AdManager : MonoBehaviour
 #endif
 	}
 
+	public void PlayRegularAd()
+	{   
+		//	Change the ad is playing bool to true.
+		adIsPlaying = true;
+		//	Start the CoRoutine that waits for 1 seconds before playing the ad, we do this to allow the new high score text to be shown before playing the ad.	
+		StartCoroutine(RegularAdWaitTime());
+	}
+
+	IEnumerator RegularAdWaitTime()
+	{
+		//	Wait 1 second before playing the regular ad.
+		yield return new WaitForSecondsRealtime(1);
+		RequestRegularAd(OnAdClosed);
+	}
+
+	private void OnAdClosed(ShowResult result)
+	{
+		//Debug.Log("Regular ad closed");
+		adIsPlaying = false;
+		//	Start the Background SFX.
+		SoundManager.Instance.StartBgMusic();
+	}
+	#endregion
+
+	#region Rewarded Ad.
 	public void RequestRewardedAd(Action<ShowResult> callback)
 	{
 #if UNITY_ADS
@@ -75,6 +107,10 @@ public class AdManager : MonoBehaviour
 			ShowOptions so = new ShowOptions();
 			so.resultCallback = callback;
 			Advertisement.Show(rewardedVideoPlacementID, so);
+			//	Change the ad is playing bool to true.
+			adIsPlaying = true;
+			//	Stop the Backgroud SFX from playing.
+			SoundManager.Instance.StopBgMusic();
 		}
 		else
 		{
@@ -84,24 +120,12 @@ public class AdManager : MonoBehaviour
 		Debug.Log("Ads not supported");
 #endif
 	}
-
-	
-	public void PlayRegularAd()
-	{
-		RequestRegularAd(OnAdClosed);
-	}
-	
 	public void PlayRewardedAd()
 	{
 		RequestRewardedAd(OnRewardedAdClosed);
 	}
 
-	private void OnAdClosed(ShowResult result)
-	{
-		//Debug.Log("Regular ad closed");
-	}
-	
-	private void OnRewardedAdClosed(ShowResult result) 
+	private void OnRewardedAdClosed(ShowResult result)
 	{
 		//Debug.Log("Rewarded ad closed");
 		switch (result)
@@ -109,15 +133,27 @@ public class AdManager : MonoBehaviour
 			case ShowResult.Finished:
 				//Debug.Log("Ad finished, reward player");
 				MainMenuManager.Instance.RewardPlayer();
+				adIsPlaying = false;
+				//	Start the Background SFX.
+				SoundManager.Instance.StartBgMusic();
 				break;
 			case ShowResult.Skipped:
 				//Debug.Log("Ad skipped, no reward");
+				adIsPlaying = false;
+				//	Start the Background SFX.
+				SoundManager.Instance.StartBgMusic();
 				break;
 			case ShowResult.Failed:
 				//Debug.Log("Ad failed");
+				adIsPlaying = false;
+				//	Start the Background SFX.
+				SoundManager.Instance.StartBgMusic();
 				break;
 		}
 	}
+	#endregion
+
+
 
 	public IEnumerator ShowBannerWhenReady()
 	{   /*
@@ -137,13 +173,13 @@ public class AdManager : MonoBehaviour
 		}
 		if (Advertisement.Banner.isLoaded || Advertisement.IsReady(bannerAdID))  //---- https://forum.unity.com/threads/can-i-make-banner-ads-optional-for-the-player.594811/#post-4143193
 		{
-			Debug.Log("Showing banner");
+			//Debug.Log("Showing banner");
 			Advertisement.Banner.SetPosition(BannerPosition.TOP_CENTER);
 			Advertisement.Banner.Show(bannerAdID);
 		}
 		else
 		{
-			Debug.Log("Bannner not ready");
+			//Debug.Log("Bannner not ready");
 			Advertisement.Banner.Load(bannerAdID);
 			yield return new WaitForSeconds(0.05f);
 			StartCoroutine(ShowBannerWhenReady());
