@@ -14579,7 +14579,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1550220694
 RectTransform:
   m_ObjectHideFlags: 0
@@ -18334,6 +18334,11 @@ PrefabInstance:
       objectReference: {fileID: 728545494}
     - target: {fileID: 6234658825603005163, guid: 37733f38ce92b0c4ab3b7e9b1a46f884,
         type: 3}
+      propertyPath: disableOnGameOverArray.Array.data[6]
+      value: 
+      objectReference: {fileID: 1665725634}
+    - target: {fileID: 6234658825603005163, guid: 37733f38ce92b0c4ab3b7e9b1a46f884,
+        type: 3}
       propertyPath: squishedThisGameText
       value: 
       objectReference: {fileID: 1123549653}
@@ -18357,41 +18362,6 @@ PrefabInstance:
       propertyPath: newHighScore
       value: 
       objectReference: {fileID: 1290256209}
-    - target: {fileID: 6234658825603005163, guid: 37733f38ce92b0c4ab3b7e9b1a46f884,
-        type: 3}
-      propertyPath: newHighScoreAnimator
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 6234658825603005163, guid: 37733f38ce92b0c4ab3b7e9b1a46f884,
-        type: 3}
-      propertyPath: NewHighScoreAnimation
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 6234658825603005163, guid: 37733f38ce92b0c4ab3b7e9b1a46f884,
-        type: 3}
-      propertyPath: anim
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 6234658825603005163, guid: 37733f38ce92b0c4ab3b7e9b1a46f884,
-        type: 3}
-      propertyPath: newHighScoreText
-      value: 
-      objectReference: {fileID: 1290256206}
-    - target: {fileID: 6234658825603005163, guid: 37733f38ce92b0c4ab3b7e9b1a46f884,
-        type: 3}
-      propertyPath: text
-      value: 
-      objectReference: {fileID: 1290256206}
-    - target: {fileID: 6234658825603005163, guid: 37733f38ce92b0c4ab3b7e9b1a46f884,
-        type: 3}
-      propertyPath: yourAnimation
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 6234658825603005163, guid: 37733f38ce92b0c4ab3b7e9b1a46f884,
-        type: 3}
-      propertyPath: test
-      value: 
-      objectReference: {fileID: 1290256206}
     - target: {fileID: 6234658825603005162, guid: 37733f38ce92b0c4ab3b7e9b1a46f884,
         type: 3}
       propertyPath: m_LocalPosition.x

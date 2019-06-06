@@ -52,10 +52,8 @@ public class SoundManager : MonoBehaviour
 
 		}
 		DontDestroyOnLoad(gameObject);
-	}
 
-	void Start()
-	{
+
 		highScoreAudioSource = gameObject.AddComponent<AudioSource>();
 		squishAudioSource = gameObject.AddComponent<AudioSource>();
 		rattleAudioSource = gameObject.AddComponent<AudioSource>();
@@ -69,6 +67,17 @@ public class SoundManager : MonoBehaviour
 		bgAudioSource = gameObject.AddComponent<AudioSource>();
 		bgAudioSource.loop = true;
 		bgAudioSource.clip = bgMusic;
+	}
+
+	void Start()
+	{
+		
+
+		//	Start the BackGround SFX if it isnt already playing.
+		if (bgMusicIsPlaying == false)
+		{
+			StartBgMusic();
+		}
 	}
 
 	#region Die SFX

@@ -62,7 +62,7 @@ public class SpiderController : MonoBehaviour
 			spiderAnim["walk"].speed = 0;
 		}
 	}
-	
+	/*
 	// Destroy with mouse click --DEBUG Input--
 	private void OnMouseDown()
 	{
@@ -81,5 +81,5 @@ public class SpiderController : MonoBehaviour
 			Destroy(gameObject);
 		}
 	}
-	
+	*/
 }

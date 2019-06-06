@@ -15,9 +15,16 @@ using GooglePlayGames.BasicApi;
 public class GooglePlayManager : MonoBehaviour
 {
 	public TextMeshProUGUI signInText;
+	//	AudioSource for the Cancel Button
+	private AudioSource buttonAudioSource;
+	//	The Button SFX Audio Clip.
+	public AudioClip buttonSFX;
 
-    void Start()
+	void Start()
     {
+		//	Create the AudioSource for the button SFX.
+		buttonAudioSource = gameObject.AddComponent<AudioSource>();
+
 		// recommended for debugging:
 		PlayGamesPlatform.DebugLogEnabled = true;
 
@@ -92,5 +99,14 @@ public class GooglePlayManager : MonoBehaviour
 				Debug.Log("Achievement Unlocked " + success.ToString());
 			});
 		}
+	}
+
+	public void CancelSignInButton()
+	{
+		Debug.Log("Cancel Button Pressed");
+		//	Play the button SFX
+		buttonAudioSource.PlayOneShot(buttonSFX);
+		//	Load the level scene.
+		SceneManager.LoadScene(1);
 	}
 }

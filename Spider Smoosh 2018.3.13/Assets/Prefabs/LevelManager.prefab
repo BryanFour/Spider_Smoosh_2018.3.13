@@ -46,17 +46,14 @@ MonoBehaviour:
   countDownText: {fileID: 0}
   sprayCountText: {fileID: 0}
   timerText: {fileID: 0}
-  timeSinceStart: 0
   countDownHasFinished: 0
   gamePlayHasStarted: 0
-  highScore: 0
-  currentScore: 0
   spiderSpeed: 1
-  spiderMaxSpeed: 2
   tutorialPanel: {fileID: 0}
   gameOver: 0
   gameOverPanel: {fileID: 0}
   disableOnGameOverArray:
+  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -68,4 +65,3 @@ MonoBehaviour:
   sprayedThisGameText: {fileID: 0}
   sprayedLifetimeAfterPlayText: {fileID: 0}
   newHighScore: {fileID: 0}
-  newHighScoreAnimator: {fileID: 0}

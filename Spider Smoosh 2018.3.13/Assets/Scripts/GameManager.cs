@@ -35,8 +35,14 @@ public class GameManager : MonoBehaviour
 
 	private void Start()
 	{
+		//	Start the BackGround SFX if it isnt already playing.
+		if (SoundManager.Instance.bgMusicIsPlaying == false)
+		{
+			SoundManager.Instance.StartBgMusic();
+		}
+
 		//	If the player hasnt played before
-		if(PlayerPrefs.HasKey("HasPlayedBefore") == false)
+		if (PlayerPrefs.HasKey("HasPlayedBefore") == false)
 		{
 			//	Run the FirstTimePlaying method.
 			FirstTimePlaying();
