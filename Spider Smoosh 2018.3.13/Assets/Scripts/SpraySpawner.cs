@@ -18,8 +18,8 @@ public class SpraySpawner : MonoBehaviour
     }
 
 	private void SpawnSpray()
-	{	//	If the countdown hasnt finished and the game isnt paused/frozen, exit this method
-		if(LevelManager.Instance.countDownHasFinished == false && Time.timeScale == 1)
+	{	//	If the countdown hasnt finished and the game isnt paused/frozen and gameover is false, exit this method
+		if(LevelManager.Instance.countDownHasFinished == false && LevelManager.Instance.gameOver == false && Time.timeScale == 1)
 		{
 			return;
 		}

@@ -28,16 +28,12 @@ public class SprayController : MonoBehaviour
 	public TextMeshProUGUI coolDownValueText;
 	//	Spray Button Text
 	public TextMeshProUGUI sprayButtonText;
-
-
 	//	Has the player sprayed before.
 	private bool hasSprayedBefore = false;	
 
 	void Start()
     {
-		
-
-		// Disable all the can parts
+		// Disable all the can parts at runtime.
 		for (int i = 0; i < childrenArray.Length; i++)
 		{
 			childrenArray[i].gameObject.SetActive(false);

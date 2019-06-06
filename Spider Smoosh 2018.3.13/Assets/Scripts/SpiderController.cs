@@ -6,7 +6,7 @@ public class SpiderController : MonoBehaviour
 {
 	private Vector3 targetPosition;
 	//	Create a float to hold the LevelManagers gamePlayHasStarted value.
-	private float gamePlayHasStarted;
+	private float gamePlayHasStarted;       //---------------------Dont seem to be using this.
 	//	The float to be given the speed from the LevelManagers spider speed coroutine.
 	private float spiderSpeed;
 	//	Get access to the spider animation clip, Drop the spider prefab in here to get it.
@@ -20,7 +20,7 @@ public class SpiderController : MonoBehaviour
 	void Start()
     {
 		//	Get the gamePlayHasStarted value from the level managers GamePlayHasStarted.
-		gamePlayHasStarted = LevelManager.Instance.gamePlayHasStarted;
+		gamePlayHasStarted = LevelManager.Instance.gamePlayHasStarted;	//---------------------Dont seem to be using this.
 		//	Create a vector3 (Where the lady bug will be.)
 		targetPosition = new Vector3(0, 0, 0);
 		//	Have the spider face the lady bug/Target Position on creation.
@@ -28,24 +28,13 @@ public class SpiderController : MonoBehaviour
 	}
 
 	void Update()
-	{
+	{	//	If the count down has not finished, exit out of this method.
 		if (LevelManager.Instance.countDownHasFinished == false)
 		{
 			return;
 		}
-		//	Get the spiders speed from the LevelManagers spider speed coroutine.
-		spiderSpeed = LevelManager.Instance.spiderSpeed;
-		//	Set the spiders animation clips speed to the same value as the spider move speed.
-		spiderAnim["walk"].speed = spiderSpeed;
-		//	----- Move the spider a step closer to the lady bug/Target Position.
-		// Calculate the distance to move/step.
-		float step = spiderSpeed * Time.deltaTime;
-		// Move towards the lady bug/Target Position.
-		transform.position = Vector3.MoveTowards(transform.position, targetPosition, step );
-		
-		//	Game Over Stuff.
 		//	If a spider reaches the target position.
-		if(transform.position == targetPosition)
+		if (transform.position == targetPosition)
 		{
 			//	Stop the spray can sound if its playing.
 			SoundManager.Instance.StopSpraySFX();
@@ -53,6 +42,24 @@ public class SpiderController : MonoBehaviour
 			LevelManager.Instance.GameOver();
 			//	Destroy the spider so the game over method dosnt loop
 			Destroy(gameObject);
+		}
+		//	If the game isnt over. 
+		if (LevelManager.Instance.gameOver == false)
+		{
+			//	Get the spiders speed from the LevelManagers spider speed coroutine.
+			spiderSpeed = LevelManager.Instance.spiderSpeed;
+			//	Set the spiders animation clips speed to the same value as the spider move speed.
+			spiderAnim["walk"].speed = spiderSpeed;
+			// Calculate the distance to move/step.
+			float step = spiderSpeed * Time.deltaTime;
+			// Move towards the lady bug/Target Position.
+			transform.position = Vector3.MoveTowards(transform.position, targetPosition, step);
+		}
+		//	If the game is over. 
+		else if(LevelManager.Instance.gameOver == true)
+		{
+			//	Stop the animation from playing by setting the anim speed to 0.
+			spiderAnim["walk"].speed = 0;
 		}
 	}
 	/*

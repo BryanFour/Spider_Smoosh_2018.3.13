@@ -41,7 +41,9 @@ public class LevelManager : MonoBehaviour
 	public GameObject tutorialPanel;
 
 	//	----- Game Over Stuff
+	//	Bool to tell weather the game is over or not.
 	[HideInInspector] public bool gameOver = false;
+	// The Game over panel.
 	public GameObject gameOverPanel;
 	//	Everything that has to be disabled when game is over
 	public GameObject[] disableOnGameOverArray;
@@ -63,6 +65,7 @@ public class LevelManager : MonoBehaviour
 	public TextMeshProUGUI sprayedLifetimeAfterPlayText;
 	//	New High Score text.
 	public TextMeshProUGUI newHighScore;
+	//	Bool to tell weather the game is over or not.
 
 	void Awake()
 	{   // LevelManager instance Stuff.
@@ -90,8 +93,8 @@ public class LevelManager : MonoBehaviour
 		//	Get the amount of spiders sprayed throughout all the games played before the level is played.
 		sprayedLifetimeBeforePlay = PlayerPrefs.GetInt("SpidersSprayed");
 
-		// Set the time scale to 1 on runtime
-		Time.timeScale = 1;
+		//	Set the gameOver bool to false at runtime.
+		gameOver = false;
 
 		//Disable the new high score text at runtime.
 		newHighScore.gameObject.SetActive(false);
@@ -227,12 +230,12 @@ public class LevelManager : MonoBehaviour
 		}
 
 		//	Set the time scaleto 0 / Pause everything.
-		Time.timeScale = 0;
+		//Time.timeScale = 0; ------- High Score anim cant play while Time.time == 0
+
 		//	Enablethe game over panel
 		gameOverPanel.SetActive(true);
 		//	Set the game over bool to true.
 		gameOver = true;
-
 		//	Post high score to the leaderboard.
 		PostToLeaderboard();
 	}
@@ -294,8 +297,9 @@ public class LevelManager : MonoBehaviour
 	}
 
 	IEnumerator SprayLastSpawned()
-	{
-		if(Time.timeScale == 1)
+	{	
+		//	If the game isnt over and the timescale = 1.
+		if(gameOver == false && Time.timeScale == 1)
 		{
 			yield return new WaitForSecondsRealtime(1);
 			float sprayLastSpawnedValue = PlayerPrefs.GetFloat("SprayLastSpawned", 0);
@@ -306,7 +310,7 @@ public class LevelManager : MonoBehaviour
 			StartCoroutine(SprayLastSpawned());
 		}
 		else
-		{	//	If the timescale isnt set to 1 (the game is paused/frozen)
+		{	//	If the timescale isnt set to 1 (the game is paused/frozen) and the game isnt over.
 			yield return new WaitForSecondsRealtime(1);
 			//	Restart this routine.
 			StartCoroutine(SprayLastSpawned());
