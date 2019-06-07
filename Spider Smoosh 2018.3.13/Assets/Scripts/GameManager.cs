@@ -107,6 +107,8 @@ public class GameManager : MonoBehaviour
 
 	public void QuitGame()
 	{
+		//	Sign out of the google play services.
+		GooglePlayManager.SignOut();
 		//	Play the button SFX
 		SoundManager.Instance.ButtonSFX();
 		//	Quit the game

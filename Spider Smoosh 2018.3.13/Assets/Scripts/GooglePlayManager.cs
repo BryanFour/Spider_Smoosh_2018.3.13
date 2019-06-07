@@ -15,6 +15,8 @@ using GooglePlayGames.BasicApi;
 public class GooglePlayManager : MonoBehaviour
 {
 	public TextMeshProUGUI signInText;
+	//	The close button.
+	public GameObject closeButton;
 	//	AudioSource for the Cancel Button
 	private AudioSource buttonAudioSource;
 	//	The Button SFX Audio Clip.
@@ -33,30 +35,52 @@ public class GooglePlayManager : MonoBehaviour
 	
 	void AuthenticateUser()
 	{
-		PlayGamesClientConfiguration config = new PlayGamesClientConfiguration.Builder().Build();
-		PlayGamesPlatform.InitializeInstance(config);
-		PlayGamesPlatform.Activate();
+		//	If the user dose not have internet connectivity.
+		if (Application.internetReachability == NetworkReachability.NotReachable)
+		{
+			signInText.text = "Unable to sign into Google Play Services, To use Google Play features please enable your mobile data or wifi.";
+			closeButton.SetActive(true);
+		}
+		//	If the user has internet connectivity.
+		else if (Application.internetReachability == NetworkReachability.ReachableViaCarrierDataNetwork || Application.internetReachability == NetworkReachability.ReachableViaLocalAreaNetwork)
+		{
+			PlayGamesClientConfiguration config = new PlayGamesClientConfiguration.Builder().Build();
+			PlayGamesPlatform.InitializeInstance(config);
+			PlayGamesPlatform.Activate();
 
-		//	Try to authenticate the user (Sign them into GPS).
-		Social.localUser.Authenticate((bool success) =>
-		{	//	If the authentication was successfull.
-			if (success == true)
+			//	Try to authenticate the user (Sign them into GPS).
+			Social.localUser.Authenticate((bool success) =>
 			{
-				Debug.Log("Logged into Google Play Games Services");
-				SceneManager.LoadScene("MainMenu");
-			}
-			//  If the authentication failed.
-			else
-			{
-				Debug.LogError("Unable to sign into Google Play Services");
-				signInText.text = "Could not sign into Google Play Services";
-				signInText.color = Color.red; //<------------------------------------ Not working, why???
-				StartCoroutine(LoadMainMenuAfterFail());
-			}
-		});
+				//	If the authentication was successfull.
+				if (success == true)
+				{
+					Debug.Log("Logged into Google Play Games Services");
+					signInText.text = "Sign in successful.";
+					closeButton.SetActive(false);
+					StartCoroutine(LoadMainMenu());
+				}
+				//  If the authentication failed.
+				else if (success == false)
+				{
+					Debug.LogError("Unable to sign into Google Play Services");
+					signInText.text = "Could not sign into Google Play Services";
+					signInText.color = Color.red; //<------------------------------------ Not working, why???
+					closeButton.SetActive(false);
+					StartCoroutine(LoadMainMenu());
+				}
+				//	If the User is already signed in.
+				else if (PlayGamesPlatform.Instance.IsAuthenticated())   //<------------------ Remove me if it breaks everything.
+				{
+					Debug.LogError("Unable to sign in, User is already authenticated.");
+					signInText.text = "You are already signed into Google Play Services.";
+					closeButton.SetActive(false);
+					StartCoroutine(LoadMainMenu());
+				}
+			});
+		}
 	}
 
-	IEnumerator LoadMainMenuAfterFail()
+	IEnumerator LoadMainMenu()
 	{
 		yield return new WaitForSecondsRealtime(2);
 		SceneManager.LoadScene("MainMenu");
@@ -101,7 +125,12 @@ public class GooglePlayManager : MonoBehaviour
 		}
 	}
 
-	public void CancelSignInButton()
+	public static void SignOut()
+	{
+		PlayGamesPlatform.Instance.SignOut();
+	}
+
+	public void CloseButton()
 	{
 		Debug.Log("Cancel Button Pressed");
 		//	Play the button SFX

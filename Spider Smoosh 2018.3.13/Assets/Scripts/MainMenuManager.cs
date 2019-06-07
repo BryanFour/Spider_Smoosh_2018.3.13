@@ -14,6 +14,8 @@ public class MainMenuManager : MonoBehaviour
 	public GameObject authYesbutton;
 	//	No Button
 	public GameObject authNoButton;
+	//	Close Button
+	public GameObject authPanelCloseButton;
 	//	The auth info text object.
 	public TextMeshProUGUI authInfoText;
 
@@ -48,7 +50,8 @@ public class MainMenuManager : MonoBehaviour
 		authPanel.SetActive(false);
 		//	Disable the reward panel at runtime.
 		rewardPanel.SetActive(false);
-
+		//	Change the info text to the default message.
+		authInfoText.text = "You are not signed into the Google Play Services, would you like to try signing in?";
 		// Run the Banner routine in the admanager script.
 		CallBannerRoutine();
 	}
@@ -92,28 +95,39 @@ public class MainMenuManager : MonoBehaviour
 	public void AttemptManualAuthButton()
 	{
 		SoundManager.Instance.ButtonSFX();
-
-		//	Disable the Yes/No buttons.
-		authYesbutton.SetActive(false);
-		authNoButton.SetActive(false);
-
-		//	Try to authenticate the user (Sign them into GPS).
-		Social.localUser.Authenticate((bool success) =>
-		{   //	If the authentication was successfull.
-			if (success == true)
-			{
-				Debug.Log("Logged into Google Play Games Services");
-				//	run routine to change the text to inform the user that the login was successfull then close the auth panel.
-				StartCoroutine(AuthSuccess());
-			}
-			//  If the authentication failed.
-			else
-			{
-				Debug.LogError("Unable to sign into Google Play Services");
-				//	Run the auth failure method.
-				AuthFailure();
-			}
-		});
+		
+		//	If the user has no internet connection.	
+		if (Application.internetReachability == NetworkReachability.NotReachable)
+		{	
+			//	Change the text.
+			authInfoText.text = "Unable to sign into Google Play Services, To use Google Play features please enable your mobile data or wifi.";
+			//	Disable the Yes/No Buttons
+			authYesbutton.SetActive(false);
+			authNoButton.SetActive(false);
+			//	Enable the close button.
+			authPanelCloseButton.SetActive(true);
+		}
+		//	If the user dose have internet conmnection.
+		else if (Application.internetReachability == NetworkReachability.ReachableViaCarrierDataNetwork || Application.internetReachability == NetworkReachability.ReachableViaLocalAreaNetwork)
+		{
+			//	Try to authenticate the user (Sign them into GPS).
+			Social.localUser.Authenticate((bool success) =>
+			{   //	If the authentication was successfull.
+				if (success == true)
+				{
+					Debug.Log("Logged into Google Play Games Services");
+					//	run routine to change the text to inform the user that the login was successfull then close the auth panel.
+					StartCoroutine(AuthSuccess());
+				}
+				//  If the authentication failed.
+				else
+				{
+					Debug.LogError("Unable to sign into Google Play Services");
+					//	Run the auth failure method.
+					AuthFailure();
+				}
+			});
+		}	
 	}
 
 	//Method to attatch to the "No, I would not like to try signing into GPS" button.
@@ -131,15 +145,20 @@ public class MainMenuManager : MonoBehaviour
 		authPanel.SetActive(true);
 		//	Change the info text.
 		authInfoText.text = "You are not signed into the Google Play Services, would you like to try signing in?";
-		//	Make sure the buttons are enabled.
+		//	Make sure the Yes/No buttons are enabled.
 		authYesbutton.SetActive(true);
 		authNoButton.SetActive(true);
+		//	Disnable the close button.
+		authPanelCloseButton.SetActive(false);
 	}
 
 	IEnumerator AuthSuccess()
 	{
 		//	Change the info text.
 		authInfoText.text = "Successfully signed into Google Play Services.";
+		//	Disable the Yes/No Buttons
+		authYesbutton.SetActive(false);
+		authNoButton.SetActive(false);
 		//	Wait for 2 seconds.
 		yield return new WaitForSeconds(2);
 		//	Close the manual auth panel.
@@ -151,6 +170,8 @@ public class MainMenuManager : MonoBehaviour
 		//	Enable the Yes/No Buttons
 		authYesbutton.SetActive(true);
 		authNoButton.SetActive(true);
+		//	Disnable the close button.
+		authPanelCloseButton.SetActive(false);
 		//	Change the text.
 		authInfoText.text = "Unable to sign into the Google Play Services, would you like to try again?";
 	}
