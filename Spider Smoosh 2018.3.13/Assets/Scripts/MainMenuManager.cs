@@ -20,8 +20,14 @@ public class MainMenuManager : MonoBehaviour
 	public TextMeshProUGUI authInfoText;
 
 	//	The Pannel that is show after watching a rewarded video. (Reward Recived panel.)
-	public GameObject rewardPanel;
+	public GameObject videoRewardPanel;
 
+	//	Rate Stuff.
+	public GameObject ratePanel;
+	public GameObject rateRewardPanel;
+	private bool userHasRated = false;
+	private bool remind = false;
+	private int currentCount;
 
 	public void Awake()
 	{
@@ -49,11 +55,18 @@ public class MainMenuManager : MonoBehaviour
 		//	Disable the auth panael at runtime.
 		authPanel.SetActive(false);
 		//	Disable the reward panel at runtime.
-		rewardPanel.SetActive(false);
+		videoRewardPanel.SetActive(false);
 		//	Change the info text to the default message.
 		authInfoText.text = "You are not signed into the Google Play Services, would you like to try signing in?";
 		// Run the Banner routine in the admanager script.
 		CallBannerRoutine();
+
+		//	Rate Stuff.
+		//	Make sure the rate and rate reward panel is disabled.
+		ratePanel.SetActive(false);
+		rateRewardPanel.SetActive(false);
+		//	Run the rate checker.
+		RateChecker();
 	}
 
 	//	Method for the show leaderboard button.
@@ -186,12 +199,12 @@ public class MainMenuManager : MonoBehaviour
 		//Debug.Log("Spray clount now is " + sprayCount);
 		PlayerPrefs.SetInt("SprayCount", sprayCount);
 		//Debug.Log("Spray count from player prefs is " + PlayerPrefs.GetInt("SprayCount", 0));
-		rewardPanel.SetActive(true);
+		videoRewardPanel.SetActive(true);
 	}
 
 	public void CloseRewardPanel()
 	{
-		rewardPanel.SetActive(false);
+		videoRewardPanel.SetActive(false);
 	}
 	#endregion
 
@@ -200,5 +213,131 @@ public class MainMenuManager : MonoBehaviour
 	{
 		//Debug.Log("RunBannerRoutine method being called from mainmenumanager");
 		StartCoroutine(AdManager.Instance.ShowBannerWhenReady());
+	}
+
+	//---------------------------------------------------------------------------------------------------------------------------------------------------------
+
+	#region Rate Stuff.
+	private void RateChecker()
+	{
+		//	If the user has not rated the app.
+		if (PlayerPrefs.GetString("UserHasRated", "No") == "No")
+		{
+			//	Set the has rated bool to false.
+			userHasRated = false;
+			//	Get the current rate count.
+			currentCount = PlayerPrefs.GetInt("CurrentRateCount", 0);
+		}
+		//	If the user has rated the app.
+		else if (PlayerPrefs.GetString("UserHasRated", "No") == "Yes")
+		{
+			userHasRated = true;
+		}
+
+		//-----------------------------------------------------------------------------------------------
+
+		//	If the user has asked to be reminded.  // "No" is the default value.
+		if (PlayerPrefs.GetString("Remind", "No") == "Yes")
+		{
+			//	Set the remind bool to true.
+			remind = true;
+		}
+		//	If the player has not asked to be reminded.  // "No" is the default value.
+		else if (PlayerPrefs.GetString("Remind", "No") == "No")
+		{
+			//	Set the remind bool to false.
+			remind = false;
+		}
+
+		//-----------------------------------------------------------------------------------------------
+
+		//	If the user has rated the app.
+		if (userHasRated == true)
+		{
+			return;
+		}
+		//	If the user has not rated the app and has not asked to be reminded and it not time to ask them to rate.
+		else if (userHasRated == false && remind == false && currentCount <= 1)
+		{
+			//	Increment the current count by 1.
+			currentCount++;
+			//	Set the player prefs to the new current count.
+			PlayerPrefs.SetInt("CurrentRateCount", currentCount);
+		}
+		//	If the user has not rated and has not asked to be reminded and it is time to ask the to rate.
+		else if (userHasRated == false && remind == false && currentCount >= 2)
+		{
+			//	Enable the rate panel.
+			ratePanel.SetActive(true);
+		}
+		//	If the user has not rated the app and has asked to be reminded and its not time to rate the app.
+		else if (userHasRated == false && remind == true && currentCount <= 0)
+		{
+			//	Increment the current count by 1.
+			currentCount++;
+			//	Set the player prefs to the new current count.
+			PlayerPrefs.SetInt("CurrentRateCount", currentCount);
+		}
+		//	If the user has not rated and has asked to be reminded and it is time to ask the to rate.
+		else if (userHasRated == false && remind == true && currentCount >= 1)
+		{
+			//	Enable the rate panel.
+			ratePanel.SetActive(true);
+		}
+	}
+
+	public void YesRateButton()
+	{   //	Play the button SFX
+		SoundManager.Instance.ButtonSFX();
+		//	Reward the player with 3 bug sprays.
+		//	Get the current spray count
+		int currentSprayCount = PlayerPrefs.GetInt("SprayCount");
+		//Debug.Log("Current spray count is " + currentSprayCount);
+		//	Add 3 to the current spray count.
+		int newSprayCount = currentSprayCount + 3;
+		//Debug.Log("Spray count afterthe reward is added to it is " + newSprayCount);
+		//	Set the new spray count to the player prefs spray count.
+		PlayerPrefs.SetInt("SprayCount", newSprayCount);
+		//Debug.Log("The new spray count from the player prefs is " + PlayerPrefs.GetInt("SprayCount"));
+
+		//	Disable the rate panel.
+		ratePanel.SetActive(false);
+		//	Set the UserHasRate player prefs string to "Yes"
+		PlayerPrefs.SetString("UserHasRated", "Yes");
+		//	Open the rate URL.
+		Application.OpenURL("https://play.google.com/store/apps/details?id=com.BurningHairStudios.SpiderSmoosh");
+		//	Start the show rewward panel routine.
+		StartCoroutine(OpenRewardPanel());
+	}
+
+	public void NoRateButton()
+	{
+		//	Play the button SFX
+		SoundManager.Instance.ButtonSFX();
+		//	Set the current rate count to 0.
+		PlayerPrefs.SetInt("CurrentRateCount", 0);
+		//	Set the player prefs remind sting to yes.
+		PlayerPrefs.SetString("Remind", "Yes");
+		//	Disable the rate panel.
+		ratePanel.SetActive(false);
+	}
+
+	public void CloseRateRewardPanel()
+	{
+		//	Play the button SFX
+		SoundManager.Instance.ButtonSFX();
+		//	Close the rate reward panel.
+		rateRewardPanel.SetActive(false);
+	}
+
+	IEnumerator OpenRewardPanel()
+	{
+		yield return new WaitForSecondsRealtime(1);
+		rateRewardPanel.SetActive(true);
+	}
+	#endregion
+	public void DeleteRateKey()
+	{
+		PlayerPrefs.DeleteAll();
 	}
 }

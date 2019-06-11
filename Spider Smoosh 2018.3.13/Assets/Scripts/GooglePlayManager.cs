@@ -41,7 +41,7 @@ public class GooglePlayManager : MonoBehaviour
 			signInText.text = "Unable to sign into Google Play Services, To use Google Play features please enable your mobile data or wifi.";
 			closeButton.SetActive(true);
 		}
-		//	If the user has internet connectivity.
+		//	If the user has internet connectivity. --- could also use (Application.internetReachability != NetworkReachability.NotReachable)
 		else if (Application.internetReachability == NetworkReachability.ReachableViaCarrierDataNetwork || Application.internetReachability == NetworkReachability.ReachableViaLocalAreaNetwork)
 		{
 			PlayGamesClientConfiguration config = new PlayGamesClientConfiguration.Builder().Build();

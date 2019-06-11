@@ -43,4 +43,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5a14b830a059de4683b9de83664652d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rewardPanel: {fileID: 0}
+  ratePanel: {fileID: 0}
+  rateRewardPanel: {fileID: 0}
